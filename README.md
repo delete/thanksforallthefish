@@ -1,1 +1,1 @@
-# php-scaffolding-site
+# php-scaffolding-site.
