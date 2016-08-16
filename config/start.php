@@ -13,7 +13,7 @@
     date_default_timezone_set("America/Sao_Paulo");
     
     /* Includes */
-    include "config.php"; 
+    include "define.php"; 
     include "debug.php"
     
     // Debug is TRUE? Will show erros
