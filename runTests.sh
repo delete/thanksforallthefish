@@ -1,0 +1,1 @@
+docker run -v $(pwd):/var/www/futura --rm phpunit/phpunit /var/www/futura/tests
