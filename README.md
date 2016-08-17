@@ -1,4 +1,4 @@
-# php-scaffolding-site.
+# Thanks For All The Fish Framework
 
 Create an env.json file on root project directory with the following content:
 
