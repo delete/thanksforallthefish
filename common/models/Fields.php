@@ -22,6 +22,42 @@ abstract class Field
     }
 
     abstract protected function validate();
+
+    public function create()
+    {
+        return $this->createName() . " " . $this->createType() . " " . $this->createCanBeNull() . " " . $this->createPrimaryKey() . " ". $this->createDefault() . ",";
+    }
+
+    protected function createName()
+    {
+        return "`" . $this->name . "`";
+    }
+
+    protected function createType()
+    {
+        return $this->type . "(" . $this->max_length .")";
+    }
+
+    protected function createCanBeNull()
+    {
+        if (!$this->canBeNull) {
+            return "NOT NULL";
+        }
+        return "";
+    }
+
+    protected function createPrimaryKey()
+    {
+        if ($this->primary_key) {
+            return "PRIMARY_KEY";
+        }
+        return "";
+    }
+
+    protected function createDefault()
+    {
+        return "DEFAULT " . $this->default;
+    }
 }
 
 

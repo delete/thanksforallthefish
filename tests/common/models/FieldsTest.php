@@ -3,7 +3,7 @@ use PHPUnit\Framework\TestCase;
 
 include "/var/www/futura/common/models/Fields.php";
 
-class IntegerFielInstancedTest extends TestCase
+class IntegerFieldInstancedTest extends TestCase
 {
     protected function setUp() 
     {
@@ -31,6 +31,13 @@ class IntegerFielInstancedTest extends TestCase
         $expected = $this->integerField->validate();
 
         $this->assertTrue($expected);
+    }
+
+    public function testCreate()
+    {
+        $expected = "`id` int(11) NOT NULL PRIMARY_KEY DEFAULT 1,";
+        $actual = $this->integerField->create();
+        $this->assertEquals($expected, $actual);
     }
 }
 
