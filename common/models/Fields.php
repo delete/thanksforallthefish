@@ -4,14 +4,32 @@
 */
 abstract class Field
 {
+    /**
+    * @var string
+    */
     protected $name;
+    /**
+    * @var integer
+    */
     protected $max_length;
+    /**
+    * @var boolean
+    */
     protected $canBeNull;
+    /**
+    * @var boolean
+    */
     protected $primary_key;
-    protected $default;
+    /**
+    * @var string
+    */
     protected $type;
+    /**
+    * @var string
+    */
     protected $className;
-    
+    protected $default;
+
     function __construct($name, $max_length, $canBeNull, $primary_key, $default, $type)
     {
         $this->name = $name;
@@ -22,16 +40,30 @@ abstract class Field
         $this->type = $type;
     }
 
+    /**
+    * @return boolean validated?
+    * @throws Exception
+    */
     abstract protected function validate();
+    /**
+    * @return string sql_query
+    * @throws Exception
+    */
     abstract protected function create();
 
+    /**
+    * @throws Exception
+    */
     protected function validateName()
     {
         if (empty($this->name) || !is_string($this->name)) {
             throw new Exception($this->className . ' must have a name!');
         }
     }
-
+    
+    /**
+    * @throws Exception
+    */
     protected function validateMaxLength()
     {
         if ($this->max_length < 1) {
@@ -39,6 +71,11 @@ abstract class Field
         }
     }
 
+    /**
+    * @param Field $field
+    * @param string $name
+    * @throws Exception
+    */
     protected function validateBool($field, $name)
     {
         if ( !is_bool($field) or is_null($field) ) {
@@ -46,21 +83,32 @@ abstract class Field
         } 
     }
 
-    protected function convertBoolToInt($field)
+    /**
+    * @param boolean $field
+    * @return integer
+    */
+    protected function convertBoolToInt($field_value)
     {
-        return $field = $field ? 1 : 0;
+        return $field_value = $field_value ? 1 : 0;
     }
 
+    /**
+    * @return string
+    */
     protected function createName()
     {
         return "`" . $this->name . "`";
     }
-
+    /**
+    * @return string
+    */
     protected function createType()
     {
         return $this->type . "(" . $this->max_length .")";
     }
-
+    /**
+    * @return string
+    */
     protected function createCanBeNull()
     {
         if (!$this->canBeNull) {
@@ -68,7 +116,9 @@ abstract class Field
         }
         return "";
     }
-
+    /**
+    * @return string
+    */
     protected function createPrimaryKey()
     {
         if ($this->primary_key) {
@@ -76,7 +126,9 @@ abstract class Field
         }
         return "";
     }
-
+    /**
+    * @return string
+    */
     protected function createDefault()
     {
         return "DEFAULT " . $this->default;
