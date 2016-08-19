@@ -23,8 +23,33 @@ abstract class Field
     }
 
     abstract protected function validate();
-
     abstract protected function create();
+
+    protected function validateName()
+    {
+        if (empty($this->name) || !is_string($this->name)) {
+            throw new Exception($this->className . ' must have a name!');
+        }
+    }
+
+    protected function validateMaxLength()
+    {
+        if ($this->max_length < 1) {
+            throw new Exception('max_length must be greater or equal to one!');
+        }
+    }
+
+    protected function validateBool($field, $name)
+    {
+        if ( !is_bool($field) or is_null($field) ) {
+            throw new Exception($name . ' must be boolean (true or false)!');
+        } 
+    }
+
+    protected function convertBoolToInt($field)
+    {
+        return $field = $field ? 1 : 0;
+    }
 
     protected function createName()
     {
@@ -67,10 +92,10 @@ class IntegerField extends Field
         $this->type = 'int';
         $this->className = 'IntegerField';
         
-        $this->name = $name ? $name : null;
-        $this->max_length = $max_length ? $max_length : null;
-        $this->canBeNull = $canBeNull ? $canBeNull : false;
-        $this->primary_key = $primary_key ? $primary_key : false;
+        $this->name = $name;
+        $this->max_length = $max_length;
+        $this->canBeNull = $canBeNull;
+        $this->primary_key = $primary_key;
         $this->default = $default;
 
         parent::__construct($this->name, $this->max_length, $this->canBeNull, $this->primary_key, $this->default, $this->type);
@@ -78,26 +103,15 @@ class IntegerField extends Field
 
     public function validate()
     {
-        if (empty($this->name)) {
-            throw new Exception('IntegerField must have a name!');
-        }
-        
-        if ($this->max_length < 1) {
-            throw new Exception('max_length must be greater or equal to one!');
-        }
-        
+        $this->validateName();
+        $this->validateMaxLength();
+        $this->validateBool($this->canBeNull, 'canBeNull');
+        $this->validateBool($this->primary_key, 'primary_key');
+
         if (!$this->canBeNull) {
-            if ($this->default === null) {
-                throw new Exception('If canBeNull is false, IntegerField must have a default value!');
-            }
-        }
-
-        if (! (bool) $this->primary_key ) {
-            throw new Exception('primary_key must be boolean (true or false)!');
-        }
-
-        if ( !is_int($this->default) ) {
-            throw new Exception('IntegerField default must be an int value!');
+            if ( !is_int($this->default) ) {
+                throw new Exception('IntegerField default must be an int value!');
+            }  
         }
 
         return true;
@@ -105,6 +119,7 @@ class IntegerField extends Field
 
     public function create()
     {
+        $this->validate();
         $name = $this->createName() . " ";
         $type = $this->createType() . " ";
         $null = $this->createCanBeNull() . " ";
@@ -123,7 +138,7 @@ class BooleanField extends Field
         $this->type = 'tinyint';
         $this->className = 'BooleanField';
         
-        $this->name = $name ? $name : null;
+        $this->name = $name;
         $this->max_length = 1;
         $this->canBeNull = false;
         $this->primary_key = false;
@@ -134,22 +149,18 @@ class BooleanField extends Field
 
     public function validate()
     {
-        if (empty($this->name) || !is_string($this->name)) {
-            throw new Exception('BooleanField must have a name!');
-        }
-
-        if ( !is_bool($this->default) ) {
-            throw new Exception('default must be boolean (true or false)!');
-        } else {
-            // change bool to int, because defautl field is tinyint.
-            $this->default = $this->default ? 1 : 0;
-        }
+        $this->validateName();
+        $this->validateBool($this->default, 'default');
+        
+        // change bool to int, because defautl field is tinyint.
+        $this->default = $this->convertBoolToInt($this->default);
 
         return true;
     }
     
     public function create()
     {
+        $this->validate();
         $name = $this->createName() . " ";
         $type = $this->createType() . " ";
         $null = $this->createCanBeNull() . " ";
