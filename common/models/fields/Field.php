@@ -23,12 +23,21 @@ abstract class Field
     /**
     * @var string
     */
-    protected $type;
+    protected $valueType;
+    /**
+    * @var string
+    */
+    protected $fieldType;
     /**
     * @var string
     */
     protected $className;
+    /**
+    * @var integer
+    */
+    public $value = null;
     protected $default;
+    
 
     function __construct($name, $max_length, $canBeNull, $primary_key, $default, $type)
     {
@@ -39,7 +48,17 @@ abstract class Field
         $this->default = $default;
         $this->type = $type;
     }
+    
+    public function getValueType()
+    {
+        return $this->valueType;
+    }
 
+    public function getFieldType()
+    {
+        return $this->fieldType;
+    }
+  
     /**
     * @return boolean validated?
     * @throws Exception
@@ -50,7 +69,7 @@ abstract class Field
     * @throws Exception
     */
     abstract protected function create();
-
+    
     /**
     * @throws Exception
     */
@@ -136,91 +155,7 @@ abstract class Field
 }
 
 
-class IntegerField extends Field
-{
-    
-    public function __construct($name, $max_length, $canBeNull, $primary_key, $default)
-    {
-        $this->type = 'int';
-        $this->className = 'IntegerField';
-        
-        $this->name = $name;
-        $this->max_length = $max_length;
-        $this->canBeNull = $canBeNull;
-        $this->primary_key = $primary_key;
-        $this->default = $default;
 
-        parent::__construct($this->name, $this->max_length, $this->canBeNull, $this->primary_key, $this->default, $this->type);
-    }
-
-    public function validate()
-    {
-        $this->validateName();
-        $this->validateMaxLength();
-        $this->validateBool($this->canBeNull, 'canBeNull');
-        $this->validateBool($this->primary_key, 'primary_key');
-
-        if (!$this->canBeNull) {
-            if ( !is_int($this->default) ) {
-                throw new Exception('IntegerField default must be an int value!');
-            }  
-        }
-
-        return true;
-    }
-
-    public function create()
-    {
-        $this->validate();
-        $name = $this->createName() . " ";
-        $type = $this->createType() . " ";
-        $null = $this->createCanBeNull() . " ";
-        $primary = $this->createPrimaryKey() ? $this->createPrimaryKey() . " ": "";
-        $default = $this->createDefault();
-
-        return  $name . $type . $null . $primary . $default . ",";
-    }
-}
-
-
-class BooleanField extends Field
-{  
-    public function __construct($name, $default)
-    {
-        $this->type = 'tinyint';
-        $this->className = 'BooleanField';
-        
-        $this->name = $name;
-        $this->max_length = 1;
-        $this->canBeNull = false;
-        $this->primary_key = false;
-        $this->default = $default;
-
-        parent::__construct($this->name, $this->max_length, $this->canBeNull, $this->primary_key, $this->default, $this->type);
-    }
-
-    public function validate()
-    {
-        $this->validateName();
-        $this->validateBool($this->default, 'default');
-        
-        // change bool to int, because defautl field is tinyint.
-        $this->default = $this->convertBoolToInt($this->default);
-
-        return true;
-    }
-    
-    public function create()
-    {
-        $this->validate();
-        $name = $this->createName() . " ";
-        $type = $this->createType() . " ";
-        $null = $this->createCanBeNull() . " ";
-        $default = $this->createDefault();
-
-        return  $name . $type . $null . $default . ",";
-    }
-}
 /*
 verbose_name=None, name=None, primary_key=False,
                  max_length=None, unique=False, blank=False, null=False,

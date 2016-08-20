@@ -1,9 +1,9 @@
 <?php 
 use PHPUnit\Framework\TestCase;
 
-require_once "/var/www/futura/common/models/Fields.php";
+require_once "/var/www/futura/common/models/fields/BooleanField.php";
 
-class BooleanFieldInstancedTest extends TestCase
+class BooleanFieldTest extends TestCase
 {
     protected function setUp() 
     {
@@ -16,14 +16,15 @@ class BooleanFieldInstancedTest extends TestCase
         $this->assertInstanceOf( BooleanField::class, $this->booleanField );
     }
 
-    public function testAttributes()
+    public function testIfAttributesExists()
     {
         $this->assertObjectHasAttribute( "name", $this->booleanField );
         $this->assertObjectHasAttribute( "max_length", $this->booleanField );
         $this->assertObjectHasAttribute( "canBeNull", $this->booleanField );
         $this->assertObjectHasAttribute( "primary_key", $this->booleanField );
         $this->assertObjectHasAttribute( "default", $this->booleanField );
-        $this->assertObjectHasAttribute( "type", $this->booleanField );
+        $this->assertObjectHasAttribute( "valueType", $this->booleanField );
+        $this->assertObjectHasAttribute( "fieldType", $this->booleanField );
         $this->assertObjectHasAttribute( "className", $this->booleanField );
     }
 
@@ -38,6 +39,17 @@ class BooleanFieldInstancedTest extends TestCase
     {
         $expected = "`status` tinyint(1) NOT NULL DEFAULT 1,";
         $actual = $this->booleanField->create();
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testTypes()
+    {
+        $expected = 'boolean';
+        $actual = $this->booleanField->getValueType();
+        $this->assertEquals($expected, $actual);
+
+        $expected = 'tinyint';
+        $actual = $this->booleanField->getFieldType();
         $this->assertEquals($expected, $actual);
     }
 }

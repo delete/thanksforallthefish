@@ -1,9 +1,9 @@
 <?php 
 use PHPUnit\Framework\TestCase;
 
-require_once "/var/www/futura/common/models/Fields.php";
+require_once "/var/www/futura/common/models/fields/IntegerField.php";
 
-class IntegerFieldInstancedTest extends TestCase
+class IntegerFieldTest extends TestCase
 {
     protected function setUp() 
     {
@@ -16,14 +16,16 @@ class IntegerFieldInstancedTest extends TestCase
         $this->assertInstanceOf( IntegerField::class, $this->integerField );
     }
 
-    public function testAttributes()
+    public function testIfAttributesExists()
     {
         $this->assertObjectHasAttribute( "name", $this->integerField );
         $this->assertObjectHasAttribute( "max_length", $this->integerField );
         $this->assertObjectHasAttribute( "canBeNull", $this->integerField );
         $this->assertObjectHasAttribute( "primary_key", $this->integerField );
         $this->assertObjectHasAttribute( "default", $this->integerField );
-        $this->assertObjectHasAttribute( "type", $this->integerField );
+        $this->assertObjectHasAttribute( "valueType", $this->integerField );
+        $this->assertObjectHasAttribute( "fieldType", $this->integerField );
+        $this->assertObjectHasAttribute( "value", $this->integerField );
     }
 
     public function testValidate()
@@ -37,6 +39,17 @@ class IntegerFieldInstancedTest extends TestCase
     {
         $expected = "`id` int(11) NOT NULL PRIMARY_KEY DEFAULT 1,";
         $actual = $this->integerField->create();
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testTypes()
+    {
+        $expected = 'integer';
+        $actual = $this->integerField->getValueType();
+        $this->assertEquals($expected, $actual);
+
+        $expected = 'int';
+        $actual = $this->integerField->getFieldType();
         $this->assertEquals($expected, $actual);
     }
 }
@@ -158,7 +171,7 @@ class IntegerFieldPrimaryKeyExceptionsTest extends TestCase
 }
 
 
-class IntegerFieldDefaultxceptionsTest extends TestCase
+class IntegerFieldDefaultExceptionsTest extends TestCase
 {   
     /**
      * @expectedException Exception
