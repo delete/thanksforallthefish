@@ -35,13 +35,6 @@ class BooleanFieldTest extends TestCase
         $this->assertTrue($expected);
     }
 
-    public function testCreate()
-    {
-        $expected = "`status` tinyint(1) NOT NULL DEFAULT 1,";
-        $actual = $this->booleanField->create();
-        $this->assertEquals($expected, $actual);
-    }
-
     public function testTypes()
     {
         $expected = 'boolean';
@@ -54,6 +47,45 @@ class BooleanFieldTest extends TestCase
     }
 }
 
+class BooleanCreateFunctionTest extends TestCase
+{
+    /*
+    * If name is testing must return "`testing`".
+    */
+    public function testCreateName()
+    {
+         // name, default
+        $booleanField = new BooleanField("testing", true);
+
+        $expected = "`testing` tinyint(1) NOT NULL DEFAULT 1,";
+        $actual = $booleanField->create();
+        $this->assertEquals($expected, $actual);
+    }
+    /*
+    * If defaut is false must return "DEFAULT 0".
+    */
+    public function testCreateDefaultFalse()
+    {
+         // name, default
+        $booleanField = new BooleanField("testing", false);
+
+        $expected = "`testing` tinyint(1) NOT NULL DEFAULT 0,";
+        $actual = $booleanField->create();
+        $this->assertEquals($expected, $actual);
+    }
+    /*
+    * If defaut is true must return "DEFAULT 1".
+    */
+    public function testCreateDefaultTrue()
+    {
+         // name, default
+        $booleanField = new BooleanField("testing", true);
+
+        $expected = "`testing` tinyint(1) NOT NULL DEFAULT 1,";
+        $actual = $booleanField->create();
+        $this->assertEquals($expected, $actual);
+    }
+}
 
 class BooleanFieldExceptionsTest extends TestCase
 {
