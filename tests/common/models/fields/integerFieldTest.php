@@ -35,12 +35,12 @@ class IntegerFieldTest extends TestCase
         $this->assertTrue($expected);
     }
 
-    public function testCreate()
-    {
-        $expected = "`id` int(11) NOT NULL PRIMARY_KEY DEFAULT 1,";
-        $actual = $this->integerField->create();
-        $this->assertEquals($expected, $actual);
-    }
+    // public function testCreate()
+    // {
+    //     $expected = "`id` int(11) NOT NULL PRIMARY_KEY DEFAULT 1,";
+    //     $actual = $this->integerField->create();
+    //     $this->assertEquals($expected, $actual);
+    // }
 
     public function testTypes()
     {
@@ -53,7 +53,6 @@ class IntegerFieldTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 }
-
 
 class IntegerFieldNameExceptionsTest extends TestCase
 {
