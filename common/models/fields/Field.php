@@ -39,15 +39,15 @@ abstract class Field
     protected $default;
     
 
-    function __construct($name, $max_length, $canBeNull, $primary_key, $default, $type)
+    function __construct($name, $max_length, $canBeNull, $primary_key, $default, $fieldType)
     {
         $this->name = $name;
         $this->max_length = $max_length;
         $this->canBeNull = $canBeNull;
         $this->primary_key = $primary_key;
         $this->default = $default;
-        $this->type = $type;
-        $this->value = $this->default;
+        $this->fieldType = $fieldType;
+        $this->value = $default;
     }
     
     public function getValueType()
@@ -124,7 +124,7 @@ abstract class Field
     */
     protected function createType()
     {
-        return $this->type . "(" . $this->max_length .")";
+        return $this->fieldType . "(" . $this->max_length .")";
     }
     /**
     * @return string

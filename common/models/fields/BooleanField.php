@@ -10,13 +10,11 @@ class BooleanField extends Field
         $this->valueType= 'boolean';
         $this->className = 'BooleanField';
         
-        $this->name = $name;
         $this->max_length = 1;
         $this->canBeNull = false;
         $this->primary_key = false;
-        $this->default = $default;
 
-        parent::__construct($this->name, $this->max_length, $this->canBeNull, $this->primary_key, $this->default, $this->fieldType);
+        parent::__construct($name, $this->max_length, $this->canBeNull, $this->primary_key, $default, $this->fieldType);
     }
 
     public function validate()

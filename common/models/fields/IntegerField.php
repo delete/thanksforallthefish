@@ -10,13 +10,7 @@ class IntegerField extends Field
         $this->valueType = 'integer';
         $this->className = 'IntegerField';
         
-        $this->name = $name;
-        $this->max_length = $max_length;
-        $this->canBeNull = $canBeNull;
-        $this->primary_key = $primary_key;
-        $this->default = $default;
-
-        parent::__construct($this->name, $this->max_length, $this->canBeNull, $this->primary_key, $this->default, $this->fieldType);
+        parent::__construct($name, $max_length, $canBeNull, $primary_key, $default, $this->fieldType);
     }
 
     public function validate()
