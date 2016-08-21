@@ -1,1 +1,1 @@
-docker run -v $(pwd):/var/www/futura --rm phpunit/phpunit /var/www/futura/tests
+docker run -v $(pwd):/var/www/site --rm phpunit/phpunit /var/www/site/tests

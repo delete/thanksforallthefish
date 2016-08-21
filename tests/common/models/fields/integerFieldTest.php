@@ -1,7 +1,7 @@
 <?php 
 use PHPUnit\Framework\TestCase;
 
-require_once "/var/www/futura/common/models/fields/IntegerField.php";
+require_once "/var/www/site/common/models/fields/IntegerField.php";
 
 class IntegerFieldTest extends TestCase
 {
