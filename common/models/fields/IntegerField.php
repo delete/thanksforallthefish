@@ -40,7 +40,7 @@ class IntegerField extends Field
         $this->validate();
         $name = $this->createName() . " ";
         $type = $this->createType() . " ";
-        $null = $this->createCanBeNull() . " ";
+        $null = $this->createCanBeNull() ? $this->createCanBeNull() . " " : "";
         $primary = $this->createPrimaryKey() ? $this->createPrimaryKey() . " ": "";
         $default = $this->createDefault();
 

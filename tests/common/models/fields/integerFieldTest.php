@@ -35,13 +35,6 @@ class IntegerFieldTest extends TestCase
         $this->assertTrue($expected);
     }
 
-    // public function testCreate()
-    // {
-    //     $expected = "`id` int(11) NOT NULL PRIMARY_KEY DEFAULT 1,";
-    //     $actual = $this->integerField->create();
-    //     $this->assertEquals($expected, $actual);
-    // }
-
     public function testTypes()
     {
         $expected = 'integer';
@@ -50,6 +43,86 @@ class IntegerFieldTest extends TestCase
 
         $expected = 'int';
         $actual = $this->integerField->getFieldType();
+        $this->assertEquals($expected, $actual);
+    }
+}
+
+class IntegerFieldCreateFunctionTest extends TestCase
+{
+    /*
+    * If name is testing must return "`testing`".
+    */
+    public function testCreateName()
+    {
+         // name, max_length, canBeNNull, primary_key, default
+        $integerField = new IntegerField("testing", 11, true, true, 1);
+
+        $expected = "`testing` int(11) PRIMARY_KEY DEFAULT 1,";
+        $actual = $integerField->create();
+        $this->assertEquals($expected, $actual);
+    }
+    /*
+    * If cabBeNull is true must not return "NOT NULL".
+    */
+    public function testCreateNull()
+    {
+         // name, max_length, canBeNNull, primary_key, default
+        $integerField = new IntegerField("id", 11, true, true, 1);
+
+        $expected = "`id` int(11) PRIMARY_KEY DEFAULT 1,";
+        $actual = $integerField->create();
+        $this->assertEquals($expected, $actual);
+    }
+    /*
+    * If cabBeNull is false must return "NOT NULL".
+    */
+    public function testCreateNotNull()
+    {
+         // name, max_length, canBeNNull, primary_key, default
+        $integerField = new IntegerField("id", 11, false, true, 1);
+
+        $expected = "`id` int(11) NOT NULL PRIMARY_KEY DEFAULT 1,";
+        $actual = $integerField->create();
+        $this->assertEquals($expected, $actual);
+    }
+    /*
+    * If cabBeNull is true must not return "NOT NULL".
+    * If primary_key is true must return "PRIMARY_KEY".
+    */
+    public function testCreatePrimaryKey()
+    {
+         // name, max_length, canBeNNull, primary_key, default
+        $integerField = new IntegerField("id", 11, true, true, 1);
+
+        $expected = "`id` int(11) PRIMARY_KEY DEFAULT 1,";
+        $actual = $integerField->create();
+        $this->assertEquals($expected, $actual);
+    }
+    /*
+    * If cabBeNull is true must not return "NOT NULL".
+    * If primary_key is false must not return "PRIMARY_KEY".
+    */
+    public function testCreateNotPrimaryKey()
+    {
+         // name, max_length, canBeNNull, primary_key, default
+        $integerField = new IntegerField("id", 11, true, false, 1);
+
+        $expected = "`id` int(11) DEFAULT 1,";
+        $actual = $integerField->create();
+        $this->assertEquals($expected, $actual);
+    }
+    /*
+    * If cabBeNull is true must not return "NOT NULL".
+    * If primary_key is false must not return "PRIMARY_KEY".
+    * If default is 10 must return "DEFAULT 10".
+    */
+    public function testCreateDefaul10()
+    {
+         // name, max_length, canBeNNull, primary_key, default
+        $integerField = new IntegerField("id", 11, true, false, 10);
+
+        $expected = "`id` int(11) DEFAULT 10,";
+        $actual = $integerField->create();
         $this->assertEquals($expected, $actual);
     }
 }
