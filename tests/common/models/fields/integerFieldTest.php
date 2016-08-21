@@ -11,21 +11,21 @@ class IntegerFieldTest extends TestCase
         $this->integerField = new IntegerField("id", 11, false, true, 1);
     }
 
-    public function testConstructor()
+    public function testInstanceType()
     {
         $this->assertInstanceOf( IntegerField::class, $this->integerField );
     }
 
     public function testIfAttributesExists()
     {
-        $this->assertObjectHasAttribute( "name", $this->integerField );
-        $this->assertObjectHasAttribute( "max_length", $this->integerField );
-        $this->assertObjectHasAttribute( "canBeNull", $this->integerField );
-        $this->assertObjectHasAttribute( "primary_key", $this->integerField );
-        $this->assertObjectHasAttribute( "default", $this->integerField );
-        $this->assertObjectHasAttribute( "valueType", $this->integerField );
-        $this->assertObjectHasAttribute( "fieldType", $this->integerField );
-        $this->assertObjectHasAttribute( "value", $this->integerField );
+        $attributes = [
+            'name', 'max_length', 'canBeNull', 'primary_key', 'default',
+            'valueType', 'fieldType', 'className', 'value'
+        ];
+
+        foreach ($attributes as $attr) {
+            $this->assertObjectHasAttribute( $attr, $this->integerField );
+        }
     }
 
     public function testValidate()
@@ -51,6 +51,15 @@ class IntegerFieldTest extends TestCase
     public function testInitialValue()
     {
         $this->assertEquals(1, $this->integerField->value);
+    }
+    
+    public function testIfHasMethods()
+    {
+        $methods = ['create', 'validate'];
+        
+        foreach ($methods as $value) {
+            $this->assertTrue( method_exists($this->integerField, $value) );
+        }
     }
 }
 

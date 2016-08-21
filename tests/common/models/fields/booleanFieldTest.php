@@ -11,22 +11,21 @@ class BooleanFieldTest extends TestCase
         $this->booleanField = new BooleanField("status", true);
     }
 
-    public function testConstructor()
+    public function testInstanceType()
     {
         $this->assertInstanceOf( BooleanField::class, $this->booleanField );
     }
 
     public function testIfAttributesExists()
     {
-        $this->assertObjectHasAttribute( "name", $this->booleanField );
-        $this->assertObjectHasAttribute( "max_length", $this->booleanField );
-        $this->assertObjectHasAttribute( "canBeNull", $this->booleanField );
-        $this->assertObjectHasAttribute( "primary_key", $this->booleanField );
-        $this->assertObjectHasAttribute( "default", $this->booleanField );
-        $this->assertObjectHasAttribute( "valueType", $this->booleanField );
-        $this->assertObjectHasAttribute( "fieldType", $this->booleanField );
-        $this->assertObjectHasAttribute( "className", $this->booleanField );
-        $this->assertObjectHasAttribute( "value", $this->booleanField );
+        $attributes = [
+            'name', 'max_length', 'canBeNull', 'primary_key', 'default',
+            'valueType', 'fieldType', 'className', 'value'
+        ];
+
+        foreach ($attributes as $attr) {
+            $this->assertObjectHasAttribute( $attr, $this->booleanField );
+        }
     }
 
     public function testValidate()
@@ -52,6 +51,15 @@ class BooleanFieldTest extends TestCase
     public function testInitialValue()
     {
         $this->assertEquals(true, $this->booleanField->value);
+    }
+
+    public function testIfHasMethods()
+    {
+        $methods = ['create', 'validate'];
+        
+        foreach ($methods as $method) {
+            $this->assertTrue( method_exists($this->booleanField, $method) );
+        }
     }
 }
 
