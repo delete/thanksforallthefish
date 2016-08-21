@@ -45,6 +45,13 @@ class IntegerFieldTest extends TestCase
         $actual = $this->integerField->getFieldType();
         $this->assertEquals($expected, $actual);
     }
+    /*
+    * Initial value will must be the default value.
+    */
+    public function testInitialValue()
+    {
+        $this->assertEquals(1, $this->integerField->value);
+    }
 }
 
 class IntegerFieldCreateFunctionTest extends TestCase

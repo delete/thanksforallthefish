@@ -26,6 +26,7 @@ class BooleanFieldTest extends TestCase
         $this->assertObjectHasAttribute( "valueType", $this->booleanField );
         $this->assertObjectHasAttribute( "fieldType", $this->booleanField );
         $this->assertObjectHasAttribute( "className", $this->booleanField );
+        $this->assertObjectHasAttribute( "value", $this->booleanField );
     }
 
     public function testValidate()
@@ -44,6 +45,13 @@ class BooleanFieldTest extends TestCase
         $expected = 'tinyint';
         $actual = $this->booleanField->getFieldType();
         $this->assertEquals($expected, $actual);
+    }
+    /*
+    * Initial value will must be the default value.
+    */
+    public function testInitialValue()
+    {
+        $this->assertEquals(true, $this->booleanField->value);
     }
 }
 

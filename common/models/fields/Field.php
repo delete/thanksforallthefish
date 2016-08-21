@@ -35,7 +35,7 @@ abstract class Field
     /**
     * @var integer
     */
-    public $value = null;
+    public $value;
     protected $default;
     
 
@@ -47,6 +47,7 @@ abstract class Field
         $this->primary_key = $primary_key;
         $this->default = $default;
         $this->type = $type;
+        $this->value = $this->default;
     }
     
     public function getValueType()
