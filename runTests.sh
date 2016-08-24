@@ -1,1 +1,1 @@
-docker run -v $(pwd):/var/www/site --rm phpunit/phpunit /var/www/site/tests
+docker run -v $(pwd):/var/www/site --rm delete21/phpunit:5.5 /var/www/site/tests
