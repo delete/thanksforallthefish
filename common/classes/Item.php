@@ -16,7 +16,9 @@ class Item extends Model
     {
 
         // Atributes that will be table columns.
+        // name, max_length, canBeNNull, primary_key, default value
         $this->id = new IntegerField("id", 11, false, true, $id);
+        // name, default value
         $this->status = new BooleanField('status', $status);
         
         // Must pass all the attributos as array to createTable function.
