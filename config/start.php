@@ -13,10 +13,11 @@
     
     /* Includes */
     // Debug is TRUE? Will show erros
+    require_once "define.php";
+
     require_once "debug.php";
     showErrorIfDebugMode(PATH_CONFIG_FILE);
     // Paths definitions
-    require_once "define.php";
     
     // Load all classes at the same time
     require_once "autoload.php";

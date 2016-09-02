@@ -15,9 +15,6 @@ class SiteController extends Controller
 
     public function index($value=null)
     {
-        var_dump($_POST);
-        var_dump($_GET);
-
         $context = ["value" => $value];
         $template = 'index';
         $this->view->load($this->templateDir . $template, $context);

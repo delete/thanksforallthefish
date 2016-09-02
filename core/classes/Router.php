@@ -10,7 +10,11 @@ class Router
     private $route;
     private $controller;
     private $method;
-    private $value;
+    private $param;
+
+    private $first;
+    private $second;
+    private $third;
     
     function __construct($uri=null)
     {
@@ -18,55 +22,41 @@ class Router
         $this->routes = $GLOBALS["config"]["routes"];
         $this->defaultRoute = $GLOBALS["config"]["defaults"];
         
-        $this->getValues();
+        $this->getParts();
     }
 
-    private function getValues()
+    private function getParts()
     {
+        $this->first = null;
+        $this->second = null;
+        $this->third = null;
         $part = 1;
-        $parts = $this->createPartsFromUri();
 
-        $this->route["controller"] = $this->getController($parts, $part);
+        $parts = explode("/", $this->uri);
 
-        if ( !is_null( $this->route["controller"] ) ){
-            $part += 1;
-        }
-        $this->route["method"] = $parts[$part];
-        
-        if (sizeof($parts) > $part + 1) {
-            $part += 1;
-            $this->route["value"] = $parts[$part];
-        }
-
-        if ( empty( $this->route["controller"] )) {
-            $this->route["controller"] = $this->defaultRoute["controller"];
-            
-            if ( empty( $this->route["method"] ) ) {
-                $this->route["method"] = $this->defaultRoute["method"];
-            }
-        }
-        if ( empty( $this->route["value"] ) ) {
-            $this->route["value"] = "";
-        }
-    }
-
-    private function createPartsFromUri()
-    {
-        if ($this->uri === "/") {
-            return null;
-        }
-        return explode("/", $this->uri);
-    }
-
-    private function getController($parts, &$part)
-    {
-        if( !array_key_exists( $parts[$part], $this->routes )){
-            return null;
-        } else if ($parts[1] == "index.php" ) {
+        if ($parts[$part] === 'index.php') {
             $part++;
         }
 
-        return $this->routes[$parts[$part]];
+        if ($parts[$part] != '') {
+            $this->first = $parts[$part];
+            $part++;
+
+            if ( array_key_exists( $part, $parts ) ) {
+                if ($parts[$part] != '') {
+                    $this->second = $parts[$part];
+                    $part++;
+
+                    if ( array_key_exists( $part, $parts ) ) {
+                        $this->third = $parts[$part];
+                    }
+                }
+            }
+        }
+
+        $this->route["controller"] = $this->first;
+        $this->route["method"] = $this->second;
+        $this->route["param"] = $this->third;
     }
 
     public function getRoute()
@@ -76,19 +66,42 @@ class Router
 
     public function routing()
     {
-        if(class_exists($this->route["controller"])){
-            
-            $this->controller = new $this->route["controller"]();
-
-            if(method_exists($this->controller, $this->route["method"])) {
-                $method = $this->route["method"];
-                $this->controller->$method($this->route["value"]);
+        if (!is_null($this->first)) {
+            if (array_key_exists( $this->first, $this->routes )) {
+                if (!is_null($this->second)) {
+                    if (method_exists($this->routes[$this->first], $this->second)) {
+                        // If the controller exists and the method given is from its, the method will be called.
+                        $this->controller = new $this->routes[$this->first]();
+                        $method = $this->second;
+                        $this->controller->$method($this->third);
+                    } else {
+                        // If the controller exists but the method doesn't, an error will be raised!
+                        throw new Exception("Method not found!");
+                    }
+                } else {
+                    // If the controller exists but was not given a method, the default method
+                    // from the controller will be called.
+                    $this->controller = new $this->routes[$this->first]();
+                    $method = $this->defaultRoute["method"];
+                    $this->controller->$method($this->third);
+                }
             } else {
-                throw new Exception("Method not found!");
+                if (method_exists($this->defaultRoute["controller"], $this->first)) {
+                    // If the given path is a method of the default controller,
+                    // the method will be called passing the next path as param.
+                    $this->controller = new $this->defaultRoute["controller"]();
+                    $method = $this->first;
+                    $this->controller->$method($this->second);
+                } else {
+                    throw new Exception("Controller not found!");
+                }
             }
         } else {
-            throw new Exception("Controller not found");
-            
-        }       
+            // If the controller and the method was not given, the default controller and method
+            // will be called.
+            $this->controller = new $this->defaultRoute["controller"]();
+            $method = $this->defaultRoute["method"];
+            $this->controller->$method($this->third);
+        }
     }
 }

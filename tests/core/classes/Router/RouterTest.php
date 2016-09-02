@@ -5,6 +5,7 @@ class RouterTest extends TestCase
 {
     protected function setUp() 
     {
+        $this->setOutputCallback(function() {});
         $this->router = new Router('/site/index/fellipe');
 
         $this->route = $this->router->getRoute();
@@ -17,22 +18,22 @@ class RouterTest extends TestCase
 
     public function testRouteControllerInstances()
     {
-        $controller = new $this->route["controller"]();
+        $controller = $this->route["controller"];
         
-        $this->assertInstanceOf( SiteController::class, $controller );
+        $this->assertEquals( 'site', $controller );
     }
     
     public function testRouteMethod()
     {
-        $method = $this->route["method"];
+        $testRouteMethodd = $this->route["method"];
 
         $this->assertEquals('index', $method);
     }
 
     public function testRouteParamValue()
     {
-        $value = $this->route["value"];
+        $param = $this->route["param"];
 
-        $this->assertEquals('fellipe', $value);
+        $this->assertEquals('fellipe', $param);
     }
 }
