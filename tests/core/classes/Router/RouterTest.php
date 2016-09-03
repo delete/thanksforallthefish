@@ -27,7 +27,7 @@ class RouterTest extends TestCase
     {
         $testRouteMethodd = $this->route["method"];
 
-        $this->assertEquals('index', $method);
+        $this->assertEquals('index', $testRouteMethodd);
     }
 
     public function testRouteParamValue()
