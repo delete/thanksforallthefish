@@ -1,24 +1,6 @@
 web:
   build: .
-  restart: always
   ports:
     - "80:80"
-  links:
-    - db
   volumes:
     - .:/var/www/site
-phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    restart: always
-    ports:
-     - "8080:80"
-    links:
-      - db
-db:
-  image: "mysql:latest"
-  restart: always
-  volumes:
-    - ./mysql:/etc/mysql/conf.d
-  environment:
-    MYSQL_ROOT_PASSWORD: phpapptest
-    MYSQL_DATABASE: mydatabase

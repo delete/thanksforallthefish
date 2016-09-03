@@ -1,1 +1,1 @@
-docker run -v $(pwd):/var/www/futura --rm phpunit/phpunit /var/www/futura/tests
+docker run -v $(pwd):/var/www/site --rm delete21/phpunit:5.5 --bootstrap /var/www/site/config/autoload.php /var/www/site/tests
