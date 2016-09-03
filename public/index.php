@@ -1,4 +1,6 @@
 <?php 
-    require "../config/start.php";
-    echo "Hello World";
+    require_once "../config/start.php";
+    
+    $router = new Router();
+    $router->routing();
 ?>
