@@ -42,7 +42,7 @@ Create an env.json file on root project directory with the following content:
 
 ### Template engine
 
-Before run the webserver, you need to download the template engine [Smarty](smarty.net).
+Before run the webserver, you need to download the template engine [Smarty](http://www.smarty.net).
 Download the files to `core/vendors` directory!
 
 Then give the directory 777 permissions: `chmod 777 -R core/vendors/smarty`.
