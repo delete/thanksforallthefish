@@ -1,26 +1,19 @@
-FROM centos:6
-MAINTAINER Takayuki Miwa <i@tkyk.name>
+FROM alpine:3.3
 
-ENV code_root /var/www/site
-ENV httpd_conf ${code_root}/dockerconfigs/httpd.conf
+ENV code_root /var/www/localhost/htdocs/site
 
-RUN rpm -ivh http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
-RUN rpm -ivh http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
-RUN yum install -y httpd
-RUN yum install --enablerepo=epel,remi-php56,remi -y \
-                              php \
-                              php-cli \
-                              php-gd \
-                              php-mbstring \
-                              php-mcrypt \
-                              php-mysqlnd \
-                              php-pdo \
-                              php-xml \
-                              php-xdebug
-RUN sed -i -e "s|^;date.timezone =.*$|date.timezone = America/Sao_Paulo|" /etc/php.ini
+# Setup apache and php
+RUN apk --update add apache2 php-apache2 php-mysql php-mcrypt php-pdo_mysql php-json \
+    && rm -f /var/cache/apk/* \
+    && mkdir /run/apache2 \
+    && sed -i 's/#LoadModule\ rewrite_module/LoadModule\ rewrite_module/' /etc/apache2/httpd.conf \
+    && mkdir -p /opt/utils
+    
+EXPOSE 80
 
 ADD . $code_root
-RUN test -e $httpd_conf && echo "Include $httpd_conf" >> /etc/httpd/conf/httpd.conf
 
-EXPOSE 80
-CMD ["/usr/sbin/apachectl", "-D", "FOREGROUND"]
+ADD dockerconfigs/start.sh /opt/utils/
+RUN chmod +x /opt/utils/start.sh
+
+ENTRYPOINT ["/opt/utils/start.sh"]

@@ -1,7 +1,7 @@
 <?php 
 use PHPUnit\Framework\TestCase;
 
-require_once "/var/www/site/core/models/fields/BooleanField.php";
+require_once "/site/core/models/fields/BooleanField.php";
 
 class BooleanFieldTest extends TestCase
 {
