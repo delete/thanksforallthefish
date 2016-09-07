@@ -2,9 +2,9 @@
 
 $GLOBALS["config"] = [
     "path" => [
-        "core" => "/var/www/site/core/",
-        "modules" => "/var/www/site/modules/",
-        "vendors" => "/var/www/site/core/vendors/",
+        "core" => "/site/core/",
+        "modules" => "/site/modules/",
+        "vendors" => "/site/core/vendors/",
     ],
     "routes" => [
         "site" => "SiteController",

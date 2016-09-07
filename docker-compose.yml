@@ -1,6 +1,7 @@
 web:
+  container_name: tfatf-web
   build: .
   ports:
     - "80:80"
   volumes:
-    - .:/var/www/site
+    - .:/site

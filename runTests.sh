@@ -1,1 +1,4 @@
-docker run -v $(pwd):/var/www/site --rm delete21/phpunit:5.5 --bootstrap /var/www/site/config/autoload.php /var/www/site/tests
+#!/bin/sh
+ROOT="/site"
+
+docker run -v $(pwd):$ROOT --rm delete21/phpunit:5.5 --bootstrap $ROOT/config/autoload.php $ROOT/tests
