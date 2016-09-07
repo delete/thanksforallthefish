@@ -2,6 +2,8 @@
 
 Code like a dolphin.
 
+> Working in progress. :]
+
 # Documentation
 
 ## Modules
