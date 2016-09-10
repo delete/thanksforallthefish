@@ -5,6 +5,16 @@ class RouterTest extends TestCase
 {
     protected function setUp() 
     {
+        $GLOBALS["config"] = [
+            "routes" => [
+                "site" => "SiteController",
+            ],
+            "defaults" => [
+                "controller" => "SiteController",
+                "method" => "index"
+            ]
+        ];
+
         $this->setOutputCallback(function() {});
         $this->router = new Router('/site/index/fellipe');
 

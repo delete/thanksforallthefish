@@ -17,11 +17,8 @@
 
     require_once "debug.php";
     showErrorIfDebugMode(PATH_CONFIG_FILE);
-    // Paths definitions
-    
-    // Load all classes at the same time
-    require_once "autoload.php";
 
+    
     /* SMARTY DEFINITIONS */
     $smarty = SmartySingleton::instance();
     // Public URis

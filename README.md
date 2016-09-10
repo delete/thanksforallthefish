@@ -1,8 +1,42 @@
 # Thanks For All The Fish Micro Web Framework
 
-Code like a dolphin.
+A micro web framework to help you to setup a new web project.
+
+> Code like a dolphin. 
+
+## One more, why?
+I needed to learn PHP and I did not want to use frameworks, so, what is the best way to learn? Creating something from scratch! Thus a micro web framework was born.
 
 > Working in progress. :]
+
+
+## Installation
+
+## Extra downloads
+
+TFATF uses an template engine called [Smarty](http://www.smarty.net), and you can use the manager script to download
+and install easily.
+
+`$ ./manager.sh -i`
+
+The script will give the Smarty directory 777 permissions and apache user/group.
+
+`chmod 777 -R core/vendors/smarty`.
+`chown apache:apache -R core/vendors/smarty/templates_c`/.
+
+
+## Usage example
+
+[On this repository](https://github.com/delete/thanksforallthefish-example) there is a full site example.
+
+
+## Testing
+
+### Using container Docker
+
+Just run: `$ ./manager.sh -t`
+
+
 
 # Documentation
 
@@ -16,7 +50,7 @@ Each module has it own `templates/` folder and controllers.
 
 Every request pass throw `index.php` file, and instantiated the Router class calling the right controller and the right method(page controller) to render the view.
 
-To set a route, a global variable as an array must be define on `config/globals.php` file, following: `routeName => controllerName`.
+To set a route, a global variable as an array must be define on `settings.php` file, following: `routeName => controllerName`.
 
 Example:
 
@@ -50,7 +84,7 @@ $GLOBALS["config"] = [
 
 ### Controllers
 
-Controllers must extends from Controller abstract class(`core/classes/Controller.php`) and its constructor function must define a
+Controllers must extends from Controller abstract class and its constructor function must define a
 `templateDir` variable as `$this->templateDir = dirname(__FILE__) . "/templates/"`.
 
 Example:
@@ -106,7 +140,7 @@ The URL will be avaiable as: `mysite.com/site`, `mysite.com/site/index` or `mysi
 
 ### Templates (view)
 
-The templates files should be inside the modules -> application directory, like: `modules/site/templates/`.
+The templates files should be inside the modules -> application directory, like: `modules/website/templates/`.
 
 To separete PHP code and HTML, a template engine called [Smarty](http://www.smarty.net) is used. You can see more about Smarty on its own [documentation](http://www.smarty.net/docs/en/).
 
@@ -114,11 +148,11 @@ To separete PHP code and HTML, a template engine called [Smarty](http://www.smar
 
 All static files like images, stylesheets, JS,... Must be on `public/` directory, organized as your wish.
 
-The file will be avaiable as: `mysite.com/style.css`, or `mysite.com/site/style.css`.
+The file will be avaiable as: `mysite.com/style.css`, or `mysite.com/website/style.css`.
 
 ## Environment config file
 
-Create an env.json file on root project directory with the following content:
+Create an env.json file on `configs/env.json` project directory with the following content:
 
 ```sh
 {
@@ -142,7 +176,7 @@ Create an env.json file on root project directory with the following content:
 
 ## String definitions
 
-Globals strings like `path` and `uri/url` are defined on `config/define.php` file.
+Globals strings like `path` and `uri/url` are defined on `configs/define.php` file.
 
 ## Tests
 
@@ -153,28 +187,10 @@ Example: If the Api class on `modules/api/Api.php` is tested, the test should be
 **Attention**: The file must have the class name plus **Test.php** as the example above.
 
 
-## Extra downloads
+## Meta
 
-Before run the webserver, you need to download the template engine [Smarty](http://www.smarty.net).
-Download the files to `core/vendors` directory!
+Fellipe Pinheiro – [@pinheirofellipe](https://twitter.com/pinheirofellipe) – pinheiro.llip[at]gmail[dot]com
 
-Then give the directory 777 permissions: `chmod 777 -R core/vendors/smarty`.
-And the right permission to apache user/group: `chown apache:apache -R core/vendors/smarty/templates_c`/.
+Distributed under the MIT license. See [``LICENSE``](https://opensource.org/licenses/MIT) for more information.
 
-
-## Running
-
-### Using container Docker
-
-Site on port 80.
-
-```sh
-# docker-composer build
-# docker-composer up web
-```
-
-## Testing
-
-### Using container Docker
-
-Just run: `# ./runTests.sh`
+[https://github.com/delete/thanksforallthefish](https://github.com/delete/thanksforallthefish)

@@ -5,6 +5,18 @@ use PHPUnit\Framework\TestCase;
 */
 class RouterExceptionsTest extends TestCase
 {
+    protected function setUp()
+    {
+        $GLOBALS["config"] = [
+            "routes" => [
+                "site" => "SiteController",
+            ],
+            "defaults" => [
+                "controller" => "SiteController",
+                "method" => "index"
+            ]
+        ];
+    }
     /**
      * @expectedException Exception
      * @expectedExceptionMessage Method not found!

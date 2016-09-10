@@ -5,28 +5,24 @@
     - load URLs
     */
     
-    # Relative root path, returns 1 path before public
-    define( "PATH_ROOT", dirname($_SERVER['DOCUMENT_ROOT']) . "/");
-
     /* Common paths */
     define( "PATH_SITE", PATH_ROOT );
-    define( "PATH_CORE", PATH_SITE . "core/");
-    define( "PATH_CLASSES", PATH_CORE . "classes/" );
-    define( "PATH_FUNCTIONS", PATH_CORE . "funcs/" );
-    define( "PATH_VENDORS", PATH_CORE . "vendors/" );
+    define( "PATH_HELPERS", PATH_SITE . "helpers/" );
+    
     // Vendors paths
+    define( "PATH_VENDORS", PATH_SITE . "vendors/" );
     define( "PATH_SMARTY", PATH_VENDORS . "smarty/" );
 
-    /* Plugins paths */
+    /* Modules paths */
     define( "PATH_MODULES", PATH_SITE . "modules/" );
 
     /* Public path */
     define( "PATH_PUBLIC", PATH_SITE . "public/" );
 
     /* Config path */
-    define( "PATH_CONFIG", PATH_SITE . "config/" );
+    define( "PATH_CONFIG", PATH_SITE . "configs/" );
     // Path to json config file, where should be declared all sensitive constants
-    define( "PATH_CONFIG_FILE", PATH_SITE . "config/env.json");
+    define( "PATH_CONFIG_FILE", PATH_CONFIG . "env.json");
        
     /* Public URLs */
     define( "URI_PUBLIC" , "http://" . $_SERVER["HTTP_HOST"] . "/" );
