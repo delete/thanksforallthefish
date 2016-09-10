@@ -1,11 +1,14 @@
 	<?php 
 use PHPUnit\Framework\TestCase;
 
+require_once __DIR__ . '/../FakeView.php';
+
 class SiteControllerTest extends TestCase
 {
     protected function setUp() 
     {
-        $this->site = new SiteController();
+        $fakeView = new FakeView();
+        $this->site = new SiteController($fakeView);
     }
 
     protected function tearDown()
@@ -24,14 +27,7 @@ class SiteControllerTest extends TestCase
         $this->site->index("fellipe");
 
         $vars = $this->site->view->templateVars();
-        
+
         $this->assertContains("fellipe", $vars);
     }
-
-    // public function testeIfTemplateExists()
-    // {
-    //     $template = $this->site->temaplateDir . 'home.html';
-    //     var_dump($this->site->view->currentFile());
-    //     $this->assertTrue($this->site->view->templateExists('index.html'));
-    // }
 }
