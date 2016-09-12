@@ -1,0 +1,11 @@
+language: php
+php:
+  - 7.0
+install:
+  - composer require phpunit/phpunit:~5.5.0
+
+script: phpunit --bootstrap tfatf/autoload.php tests/
+
+cache:
+  directories:
+    - $HOME/.composer/cache
