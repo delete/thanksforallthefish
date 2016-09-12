@@ -34,8 +34,9 @@ The script will give the Smarty directory 777 permissions and apache user/group.
 
 ### Using container Docker
 
-Just run: `$ ./manager.sh -t`
+Building the image: `$ ./manager.sh -b`
 
+Running: `$ ./manager.sh -t`
 
 
 # Documentation
