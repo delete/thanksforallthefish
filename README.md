@@ -186,6 +186,9 @@ Example: If the Api class on `modules/api/Api.php` is tested, the test should be
 
 **Attention**: The file must have the class name plus **Test.php** as the example above.
 
+## Contributing
+
+Want to contribute? [Follow these recommendations](https://github.com/delete/thanksforallthefish/blob/master/CONTRIBUTING.md).
 
 ## Meta
 
