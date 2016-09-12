@@ -1,4 +1,2 @@
-config/env.json
-tests/env.json
-core/vendors/smarty/
+tfatf/vendors/
 log/

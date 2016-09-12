@@ -3,7 +3,18 @@ use PHPUnit\Framework\TestCase;
 
 class RouterPartsTest extends TestCase
 {
-
+    protected function setUp()
+    {
+        $GLOBALS["config"] = [
+            "routes" => [
+                "site" => "SiteController",
+            ],
+            "defaults" => [
+                "controller" => "SiteController",
+                "method" => "index"
+            ]
+        ];
+    }
     public function testSiteIndexWithAndParam()
     {
         $this->partsTest('/site/index/fellipe', 'site', 'index', 'fellipe');

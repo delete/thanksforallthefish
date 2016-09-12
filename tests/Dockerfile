@@ -1,6 +1,10 @@
-# PHPUnit Docker Container.
-FROM composer/composer
-MAINTAINER Julien Breux <julien.breux@gmail.com>
+FROM alpine:3.3
+
+Maintainer Geshan Manandhar <geshan@gmail.com>
+
+RUN apk --update add curl php php-curl php-openssl php-json php-phar php-dom php-mysqli && rm /var/cache/apk/*
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer 
 
 # Goto temporary directory.
 WORKDIR /tmp
