@@ -1,5 +1,7 @@
 # Thanks For All The Fish Micro Web Framework
 
+[![Build Status](https://travis-ci.org/delete/thanksforallthefish.svg?branch=master)](https://travis-ci.org/delete/thanksforallthefish)
+
 A micro web framework to help you to setup a new web project.
 
 > Code like a dolphin. 
