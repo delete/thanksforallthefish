@@ -90,8 +90,10 @@ $GLOBALS["config"] = [
 
 ### Controllers
 
-Controllers must extends from Controller abstract class and its constructor function must define a
-`templateDir` variable as `$this->templateDir = dirname(__FILE__) . "/templates/"`.
+Controllers must extends from Controller abstract class and its constructor function can redefine a
+`templateDir` variable. 
+
+The default value is the current controller class directory + `"templates/"` directory, like: `$this->templateDir = dirname(__FILE__) . "/templates/"`.
 
 Example:
 
@@ -104,7 +106,8 @@ class SiteController extends Controller
     function __construct($view=null) {
         parent::__construct($view);
 
-        $this->templateDir = dirname(__FILE__) . "/templates/";
+        // Redefining the template directory
+        $this->templateDir = dirname(__FILE__) . "/anotherTemplateDir/";
     }
     // others methods
 }
@@ -126,9 +129,9 @@ class SiteController extends Controller
 }
 ```
 
-To return an HTML file as a response, the `view->load()` method must be called.
+To return an HTML file as a response, the `loadTemplate()` method must be called.
 
-`view->load()` method receive two params: the path to the HTML file(the **.html** extension it is not necessary) and context variables(optional).
+`loadTemplate()` method receive two params: the path to the HTML file(the **.html** extension it is necessary) and context variables(optional).
 The context variable will be available to access on template by the array key: `{$page}`.
 
 Example:
@@ -137,8 +140,8 @@ Example:
 public function index()
 {
     $context = ["page" => 'index'];
-    $template = 'index';
-    $this->view->load($this->templateDir . $template, $context);
+    $template = 'index.html';
+    $this->loadTemplate($template, $context);
 }
 ```
 
