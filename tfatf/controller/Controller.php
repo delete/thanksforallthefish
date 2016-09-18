@@ -9,7 +9,11 @@ abstract class Controller
     {
         $this->view = $view ? $view : new View();
 
-        $this->templateDir = __DIR__ . "/templates/";
+        // Get child class info then the file name
+        $class_info = new ReflectionClass($this);
+        $child_filename = $class_info->getFileName();
+        
+        $this->templateDir = dirname( $child_filename ) . "/templates/";
     }
 
     public function loadTemplate($template, $context)
