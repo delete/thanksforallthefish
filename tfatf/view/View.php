@@ -8,15 +8,21 @@ class View
     private $templateDir;
 
     function __construct($engine=null) {
+        # Instantiate Smarty as a default template engine
         $this->engine = $engine ? $engine : SmartySingleton::instance();
     }
 
     public function load($template, Array $context)
     {
-        $this->engine->assign($context);
-        $this->engine->display($template . '.html');
+        $this->assign($context);
+        $this->engine->display($template);
     }
 
+    public function assign($data)
+    {
+        $this->engine->assign($data);
+    }
+    
     public function clearAllAssign()
     {
         $this->engine->clearAllAssign();
