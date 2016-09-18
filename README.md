@@ -14,17 +14,20 @@ I needed to learn PHP and I did not want to use frameworks, so, what is the best
 
 ## Installation
 
+Use the install bash script to an easily installation:
+
+`'curl -sSL https://raw.githubusercontent.com/delete/thanksforallthefish/master/install.sh | sh' `
+
 ## Extra downloads
 
-TFATF uses an template engine called [Smarty](http://www.smarty.net), and you can use the manager script to download
-and install easily.
+TFATF uses an template engine called [Smarty](http://www.smarty.net), and it's need the right permissions.
 
-`$ ./manager.sh -i`
+The above script will give the Smarty directory 777 permissions.
 
-The script will give the Smarty directory 777 permissions and apache user/group.
+`chmod 777 -R vendors/smarty`.
 
-`chmod 777 -R core/vendors/smarty`.
-`chown apache:apache -R core/vendors/smarty/templates_c`/.
+If you have some permissions problems, try:
+`chown apache:apache -R vendors/smarty/templates_c`
 
 
 ## Usage example
