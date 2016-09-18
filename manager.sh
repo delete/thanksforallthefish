@@ -11,7 +11,7 @@ COMMAND=$1
 run_test(){
 	docker run --rm \
 		-v "$(pwd)":$ROOT \
-		alpine-phpunit:3.3 --bootstrap $ROOT/tfatf/autoload.php $ROOT/tests
+		alpine-phpunit:3.3 --stderr --bootstrap $ROOT/tfatf/autoload.php $ROOT/tests
 }
 
 build_images(){

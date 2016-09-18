@@ -8,5 +8,18 @@ abstract class Controller
     function __construct( $view=null )
     {
         $this->view = $view ? $view : new View();
+
+        $this->templateDir = __DIR__ . "/templates/";
+    }
+
+    public function loadTemplate($template, $context)
+    {
+        $this->view->load($this->templateDir . $template, $context);
+    }
+
+    public function loadJson(Array $data)
+    {
+        header('Content-type: application/json');
+        echo json_encode($data);
     }
 }

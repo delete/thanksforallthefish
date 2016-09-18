@@ -17,17 +17,22 @@ class FakeEngine
        $this->context = array_merge($this->context , $data);
     }
 
-    function fetch( $data )
+    function fetch( $templatePath )
     {
         // Retrieve required template
-        $template = file_get_contents($data);
+        $templateContent = file_get_contents($templatePath);
 
         // Replace the context on template
         foreach ($this->context as $key => $value) {
-            $template = str_replace("{\$" . $key . "}", $value, $template);
+            $templateContent = str_replace("{\$" . $key . "}", $value, $templateContent);
         }
 
-        return $template;
+        return $templateContent;
+    }
+
+    public function display($template)
+    {
+        echo $this->fetch($template);
     }
 
     public function clearAllAssign()
