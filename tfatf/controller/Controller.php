@@ -19,7 +19,6 @@ abstract class Controller
 
     public function loadJson(Array $data)
     {
-        header('Content-type: application/json');
         echo json_encode($data);
     }
 }
