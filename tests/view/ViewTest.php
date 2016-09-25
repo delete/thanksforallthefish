@@ -16,6 +16,12 @@ class ViewTest extends TestCase
         $this->view->assign(
             ['firstname' => 'Fellipe', 'lastname' => 'Pinheiro']
         );
+
+        $this->view->addTemplateDir('/mycontroller/mytemplates/', 'mysite');
+        
+        $this->view->addTemplateDir(
+            '/mysecondcontroller/mysecondtemplates/', 'mysecondsite'
+        );
     }
 
     protected function tearDown()
@@ -82,5 +88,24 @@ class ViewTest extends TestCase
         $this->assertContains('<h1>Hello Fellipe Pinheiro</h1>', $templateString);
         // 'email' var was not assigned, must not appear.
         $this->assertContains('<p>Your email is: {$email}</p>', $templateString);
+    }
+
+    public function testGetTemplateDirs()
+    {
+        $templates = [
+            'mysite' => '/mycontroller/mytemplates/',
+            'mysecondsite' => '/mysecondcontroller/mysecondtemplates/'
+        ];
+        $expectedTemplates = $this->view->getTemplateDir();
+    
+        $this->assertEquals($templates, $expectedTemplates);
+    }
+    
+    public function testGetTemplateDirByName()
+    {
+        $template = '/mycontroller/mytemplates/';
+        $expectedTemplate = $this->view->getTemplateDir("mysite");
+
+        $this->assertEquals($template, $expectedTemplate);
     }
 }

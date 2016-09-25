@@ -11,6 +11,7 @@ class MySiteController extends Controller
         parent::__construct($view);
 
         $this->templateDir = dirname(__FILE__) . "/";
+        $this->view->addTemplateDir($this->templateDir, 'website');
     }
 
     public function index($value=null)

@@ -6,10 +6,12 @@
 class FakeEngine
 {
     private $context;
+    private $directories;
 
     function __construct()
     {
         $this->context = [];
+        $this->directories = [];
     }
 
     public function assign($data)
@@ -42,5 +44,19 @@ class FakeEngine
     public function getTemplateVars()
     {
         return array_values($this->context);
+    }
+
+    public function getTemplateDir($relatedName=null)
+    {
+        if ($relatedName != null) {
+            return $this->directories[$relatedName];
+        } else {
+            return $this->directories;
+        }
+    }
+
+    public function addTemplateDir($dir, $relatedName)
+    {
+        $this->directories[$relatedName] = $dir;
     }
 }

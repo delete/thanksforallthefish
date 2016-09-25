@@ -47,4 +47,13 @@ class ControllerTest extends PHPUnit_Framework_TestCase
 
         $this->myController->citiesApi();
     }
+
+    public function testIfTemplateDirExists()
+    {
+        $template = '/controller\/fixtures/';
+
+        $expectedTemplate = $this->myController->view->getTemplateDir("website");
+
+        $this->assertRegExp($template, $expectedTemplate);
+    }
 }

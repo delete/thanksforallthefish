@@ -5,7 +5,6 @@
 class View
 {
     private $engine;
-    private $templateDir;
 
     function __construct($engine=null) {
         # Instantiate Smarty as a default template engine
@@ -35,5 +34,15 @@ class View
     public function templateVars()
     {
         return $this->engine->getTemplateVars();
-    }    
+    }
+
+    public function getTemplateDir($relatedName=null)
+    {
+        return $this->engine->getTemplateDir($relatedName);
+    }
+
+    public function addTemplateDir($dir, $relatedName)
+    {
+        $this->engine->addTemplateDir($dir, $relatedName);
+    } 
 }
